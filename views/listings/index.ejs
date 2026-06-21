@@ -1,0 +1,221 @@
+<% layout('/layouts/biolerplate') %>
+
+<!-- CSS FOR AIRBNB FILTERS & TOGGLE -->
+<style>
+    /* Filters Container styling */
+    #filters {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem 0;
+        overflow-x: auto;
+    }
+    
+    .filter-options {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+        overflow-x: auto;
+        white-space: nowrap;
+        scroll-behavior: smooth;
+    }
+    
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .filter-options::-webkit-scrollbar {
+        display: none;
+    }
+    
+    /* Individual Filter Item Hover Effects */
+    .filter {
+        text-align: center;
+        color: #6a6a6a;
+        opacity: 0.7;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        border-bottom: 2px solid transparent;
+        padding-bottom: 0.5rem;
+    }
+    
+    .filter:hover {
+        opacity: 1;
+        color: #000;
+        border-bottom: 2px solid #b0b0b0;
+        transform: translateY(-2px);
+    }
+    
+    .filter i {
+        font-size: 1.5rem;
+        display: block;
+        margin-bottom: 0.25rem;
+    }
+    
+    .filter p {
+        font-size: 0.75rem;
+        margin: 0;
+        font-weight: 600;
+    }
+    
+    /* Airbnb Styling for Right Side Tax Toggle */
+    .tax-toggle {
+        border: 1px solid #cbd5e1;
+        border-radius: 12px;
+        padding: 0.75rem 1rem;
+        display: flex;
+        align-items: center;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #222;
+        cursor: pointer;
+        transition: box-shadow 0.2s ease;
+        white-space: nowrap;
+    }
+    
+    .tax-toggle:hover {
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        border-color: #000;
+    }
+    
+    .form-check-input:checked {
+        background-color: #222222;
+        border-color: #222222;
+    }
+    
+    /* Heart Button Fine-tuning inside card */
+    .heart-btn {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: transparent;
+        border: none;
+        color: white;
+        font-size: 1.4rem;
+        z-index: 10;
+        cursor: pointer;
+        text-shadow: 0 0 5px rgba(0,0,0,0.5);
+        transition: transform 0.2s ease;
+    }
+    
+    .heart-btn:hover {
+        transform: scale(1.15);
+    }
+    
+    .heart-btn.active i {
+        color: #ff385c !important;
+    }
+</style>
+
+<body>
+    <div class="container mt-3">
+        
+        <!-- 🔥 AIRBNB ICONS FILTERS & TAX TOGGLE SECTION -->
+        <div id="filters" class="mb-4">
+            <!-- Left Side: Interactive Icons with Hover -->
+            <div class="filter-options">
+                <div class="filter">
+                    <i class="fa-solid fa-fire"></i>
+                    <p>Trending</p>
+                </div>
+                <div class="filter">
+                    <i class="fa-solid fa-bed"></i>
+                    <p>Rooms</p>
+                </div>
+                <div class="filter">
+                    <i class="fa-solid fa-mountain-city"></i>
+                    <p>Iconic Cities</p>
+                </div>
+                <div class="filter">
+                    <i class="fa-solid fa-mountain"></i>
+                    <p>Mountains</p>
+                </div>
+                <div class="filter">
+                    <i class="fa-solid fa-fort-awesome"></i>
+                    <p>Castles</p>
+                </div>
+                <div class="filter">
+                    <i class="fa-solid fa-person-swimming"></i>
+                    <p>Amazing Pools</p>
+                </div>
+                <div class="filter">
+                    <i class="fa-solid fa-campground"></i>
+                    <p>Camping</p>
+                </div>
+                <div class="filter">
+                    <i class="fa-solid fa-cow"></i>
+                    <p>Farms</p>
+                </div>
+                <div class="filter">
+                    <i class="fa-solid fa-snowflake"></i>
+                    <p>Arctic</p>
+                </div>
+                <div class="filter">
+                    <i class="fa-solid fa-water"></i>
+                    <p>Lakefront</p>
+                </div>
+                <div class="filter">
+                    <i class="fa-solid fa-hotel"></i>
+                    <p>Mansions</p>
+                </div>
+                <div class="filter">
+                    <i class="fa-solid fa-snowflake"></i>
+                    <p>Arctic</p>
+                </div>
+            </div>
+
+            <!-- Right Side: Tax Toggle Bar -->
+            <div class="tax-toggle ms-3">
+                <div class="form-check form-switch form-check-reverse m-0">
+                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" style="cursor: pointer;">
+                    <label class="form-check-label me-2" for="flexSwitchCheckDefault" style="cursor: pointer;">Display total before taxes</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- LISTINGS GRID -->
+        <div class="row row-cols-lg-4 row-cols-md-2 row-cols-sm-1 g-4">
+        <% for(let listing of allListings){ %>
+            
+            <div class="col">
+                <div class="card h-100 position-relative border-0 shadow-sm rounded-3 overflow-hidden">
+                    
+                    <!-- Floating Heart Icon -->
+                    <button class="heart-btn" onclick="toggleHeart(this)">
+                        <i class="fa-regular fa-heart"></i>
+                    </button>
+
+                    <a href="/listings/<%= listing._id %>" class="text-decoration-none text-dark">
+                        <div class="card-img-container" style="height: 220px; overflow: hidden;">
+                            <img src="<%= listing.image.url %>" class="card-img-top w-100 h-100" style="object-fit: cover;" alt="listing-images">
+                        </div>
+                        <div class="card-body p-2">
+                            <p class="card-text m-0">
+                                <strong class="text-truncate d-block" style="font-size: 0.95rem; color: #222;"><%= listing.title %></strong>
+                                <span style="color: #555; font-size: 0.9rem;">
+                                    <strong>&#8377;<%= listing.price.toLocaleString('en-PK') %></strong> /night
+                                </span>
+                            </p>
+                        </div>
+                    </a>
+
+                </div> 
+            </div> 
+
+        <% } %>
+        </div>
+    </div>
+
+    <!-- SCRIPT FOR HEART TOGGLE -->
+    <script>
+        function toggleHeart(button) {
+            let icon = button.querySelector('i');
+            if (icon.classList.contains('fa-regular')) {
+                icon.classList.remove('fa-regular');
+                icon.classList.add('fa-solid');
+                button.classList.add('active');
+            } else {
+                icon.classList.remove('fa-solid');
+                icon.classList.add('fa-regular');
+                button.classList.remove('active');
+            }
+        }
+    </script>
+</body>

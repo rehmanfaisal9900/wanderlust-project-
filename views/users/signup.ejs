@@ -1,0 +1,65 @@
+<!-- <% layout('/layouts/biolerplate') %>
+
+<h1>Signup On WanderLust </h1>
+<form action="/signup" method="POST" class="needs-validation" novalidate>
+
+<div class="mb-2.5">
+           <label for="username" class="form-label custom-label mb-1">User Name</label>
+           <input type="text" name="username" id="username" class="form-control custom-input" required>
+     <div class="valid-feedback">Looks good!</div>
+</div>
+
+<div class="mb-2.5">
+           <label for="email" class="form-label custom-label mb-1">Email</label>
+           <input type="email" name="email" id="email" class="form-control custom-input" required>
+</div>
+<div class="mb-2.5">
+           <label for="password" class="form-label custom-label mb-1">Enter Password</label>
+           <input type="password" name="password" id="password" class="form-control custom-input" required>
+</div>
+  <button class="btn btn-success">Signup</button>
+</form> -->
+
+
+<% layout('/layouts/biolerplate') %>
+
+<div class="row mt-5">
+    <div class="col-11 col-sm-8 col-md-5 mx-auto">
+        
+        <div class="card p-4 rounded-4 shadow-sm border border-muted bg-white">
+            
+            <div class="text-start mb-4">
+                <h3 class="fw-bold text-dark mb-1" style="letter-spacing: -0.5px;">Sign up on WanderLust</h3>
+                <p class="text-muted small">Welcome to WanderLust! Create an account to explore amazing places.</p>
+            </div>
+
+            <form action="/signup" method="POST" class="needs-validation" novalidate>
+                
+                <div class="mb-3.5">
+                    <label for="username" class="form-label fw-semibold text-secondary small mb-1">Username</label>
+                    <input type="text" name="username" id="username" class="form-control py-2.5 px-3 rounded-3" placeholder="Choose a username" required style="border: 1px solid #b0b0b0; box-shadow: none;">
+                    <div class="invalid-feedback">Please choose a valid username.</div>
+                </div>
+
+                <div class="mb-3.5 mt-3">
+                    <label for="email" class="form-label fw-semibold text-secondary small mb-1">Email Address</label>
+                    <input type="email" name="email" id="email" class="form-control py-2.5 px-3 rounded-3" placeholder="name@example.com" required style="border: 1px solid #b0b0b0; box-shadow: none;">
+                    <div class="invalid-feedback">Please enter a valid email address.</div>
+                </div>
+
+                <div class="mb-4 mt-3">
+                    <label for="password" class="form-label fw-semibold text-secondary small mb-1">Password</label>
+                    <input type="password" name="password" id="password" class="form-control py-2.5 px-3 rounded-3" placeholder="Create a strong password" required style="border: 1px solid #b0b0b0; box-shadow: none;">
+                    <div class="invalid-feedback">Password is required.</div>
+                </div>
+
+                <button class="btn w-100 py-2.5 fw-bold text-white rounded-3 mt-2" style="background-color: #FF385C; border: none; font-size: 1.05rem; transition: background 0.2s ease;">
+                    Continue / Sign up
+                </button>
+                
+            </form>
+            
+        </div>
+        
+    </div>
+</div>

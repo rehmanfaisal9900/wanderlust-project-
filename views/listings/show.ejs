@@ -1,0 +1,145 @@
+<% layout('/layouts/biolerplate') %>
+<div class="row mt-4 justify-content-center">
+    <div class="col-12 col-md-8 col-lg-6 mb-5">
+        
+        <div class="image-container mb-3">
+            <img src="<%= listing.image.url %>" class="img-fluid show-img" alt="listing image">
+        </div>
+        
+        <i><b>Owned by :</b> <%= listing.owner.username %></i>
+        <br>
+        
+        <div class="details-content px-1">
+            <h4 class="show-title mb-2"><%= listing.title %></h4>
+            
+            <div class="location-text text-muted mb-3">
+                <i class="fa-solid fa-location-dot me-1 brand-icon"></i> <%= listing.location %>, <%= listing.country %>
+            </div>
+           
+            <p class="description-text mb-4"><%= listing.description %></p>
+            
+            <div class="price-block p-3 rounded-3 mb-4">
+                <span class="price-amount">&#8377;<%= listing.price.toLocaleString('en-PK')%></span>
+                <span class="price-unit"> / night</span>
+            </div>
+        </div>
+        
+        <hr class="my-4 opacity-25">
+        
+        <% if (currUser && currUser._id.equals(listing.owner._id)) { %>
+        <div class="d-flex gap-3 align-items-center mb-4">
+            <a href="/listings/<%= listing._id %>/edit" class="btn btn-airbnb-primary flex-grow-1 py-2 fw-semibold">
+                <i class="fa-regular fa-pen-to-square me-2"></i>Edit Details
+            </a>
+            <form method="POST" action="/listings/<%= listing._id %>?_method=delete" class="m-0 flex-grow-1">
+                <button class="btn btn-airbnb-secondary w-100 py-2 fw-semibold">
+                    <i class="fa-regular fa-trash-can me-2"></i>Delete
+                </button>
+            </form>
+        </div>
+        <% } %>
+
+        <% if (currUser) { %>
+        <hr class="my-4 opacity-25">
+        <div class="review-form-section mb-5">
+            <h4 class="fw-bold mb-4" style="color: #222222; letter-spacing: -0.5px;">Customer Experiences</h4>
+            
+            <div class="p-4 bg-white border rounded-4 shadow-sm">
+                <form action="/listings/<%= listing._id %>/reviews" method="POST" novalidate class="needs-validation">
+                    <div class="mb-3">
+                        <label for="rating" class="form-label fw-bold small text-uppercase text-muted">Select Your Rating</label>
+                        <input type="range" min="1" max="5" name="review[rating]" id="rating" class="form-range" style="accent-color: #ff385c;">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="comment" class="form-label fw-bold small text-uppercase text-muted">Your Feedback</label>
+                        <textarea name="review[comment]" id="comment" rows="3" required class="form-control border-0 bg-light p-3" 
+                        style="border-radius: 12px; resize: none;" placeholder="What was your stay like?"></textarea>
+                        <div class="invalid-feedback">Please share a few words about your experience.</div>
+                    </div>
+                    
+                    <button class="btn px-4 py-2 fw-bold text-white shadow-sm" style="background-color: #ff385c; border-radius: 10px; border: none;">
+                        Submit Review
+                    </button>
+                </form>
+            </div>
+        </div>
+        <hr class="my-4 opacity-25">
+        <% } %>
+       
+        <% if (listing.reviews.length > 0) { %>
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h5 class="fw-bold m-0" style="color: #222222;">
+                    <i class="fa-solid fa-star text-danger me-2"></i><%= listing.reviews.length %> Reviews
+                </h5>
+            </div>
+            
+            <div class="row g-4">
+                <% for (let review of listing.reviews) { %>
+                    <div class="col-12 col-md-6">
+                        <div class="review-card p-4 h-100 d-flex flex-column justify-content-between" style="border: 1px solid #f0f0f0; border-radius: 16px; background: #ffffff; transition: all 0.3s ease;">
+                            
+                            <div>
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="avatar-circle bg-light d-flex align-items-center justify-content-center rounded-circle me-3" style="width: 42px; height: 42px;">
+                                        <i class="fa-solid fa-user text-secondary"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="fw-bold m-0 text-capitalize" style="color: #222222;">
+                                            <%= (review.author && review.author.username) ? review.author.username : "Anonymous User" %>
+                                        </h6>
+                                        <div class="text-warning" style="font-size: 0.75rem;">
+                                            <% for(let i=0; i < review.rating; i++) { %>
+                                                <i class="fa-solid fa-star"></i>
+                                            <% } %>
+                                            <% for(let i=review.rating; i < 5; i++) { %>
+                                                <i class="fa-regular fa-star text-muted"></i>
+                                            <% } %>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <p class="text-secondary mb-3" style="font-size: 0.95rem; line-height: 1.6; font-weight: 400;">
+                                    "<%= review.comment %>"
+                                </p>
+                            </div>
+
+                            <% if (currUser && review.author && currUser._id.equals(review.author._id)) { %>
+                                <div class="mt-auto pt-2 d-flex justify-content-end">
+                                    <form method="POST" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE" class="m-0">
+                                        <button class="btn btn-link text-decoration-none p-0 text-muted hover-danger" style="font-size: 0.85rem; font-weight: 500;">
+                                            <i class="fa-solid fa-trash-can me-1"></i> Delete
+                                        </button>
+                                    </form>
+                                </div>
+                            <% } %>
+                            
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+        <% } else { %>
+            <div class="text-center py-5 border rounded-4 bg-light">
+                <i class="fa-regular fa-comment-dots fs-1 text-muted mb-3 d-block"></i>
+                <p class="text-muted m-0" style="font-style: italic;">No reviews yet. Be the first to share your experience!</p>
+            </div>
+        <% } %>
+
+    </div>
+</div>
+
+<style>
+    .review-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+        border-color: #ff385c !important;
+    }
+    .hover-danger:hover {
+        color: #ff385c !important;
+    }
+    .form-control:focus {
+        background-color: #ffffff !important;
+        box-shadow: 0 0 0 3px rgba(255, 56, 92, 0.1) !important;
+        border: 1px solid #ff385c !important;
+    }
+</style>

@@ -1,0 +1,64 @@
+<% layout('/layouts/biolerplate') %>
+<div class="row mt-4 justify-content-center">
+    <div class="col-12 col-md-10 col-lg-7">
+        
+        <div class="card edit-form-card border-0 p-4 shadow-sm rounded-4">
+            
+            <h3 class="edit-form-heading mb-3 text-center">Edit Your Listing</h3>
+            
+            <form action="/listings/<%= listing._id %>?_method=PUT" method="post" novalidate class="needs-validation" enctype="multipart/form-data">
+                
+                <div class="mb-2.5">
+                    <label for="title" class="form-label edit-custom-label mb-1">Title</label>
+                    <input type="text" name="listing[title]" value="<%= listing.title %>" class="form-control edit-custom-input" required>
+                    <div class="valid-feedback"> Title Looks good!</div>
+                </div>
+             
+                
+                
+                <div class="mb-2.5">
+                    <label for="description" class="form-label edit-custom-label mb-1">Description</label>
+                    <textarea name="listing[description]" rows="2" class="form-control edit-custom-input" required><%= listing.description %></textarea> 
+                    <div class="invalid-feedback"> Please enter shorter description!</div>
+                </div>
+
+               <div class="mb-3">
+    <span class="d-block mb-2 small fw-bold text-uppercase text-muted">Current Image</span>
+    <div class="border rounded-circle shadow-sm overflow-hidden" style="width: 120px; aspect-ratio: 1/1;">
+        <img src="<%= listing.image.url %>" class="img-fluid w-100 h-100" style="object-fit: cover;" alt="current image">
+    </div>
+</div>
+                
+                <div class="mb-2.5">
+                    <label for="image" class="form-label edit-custom-label mb-1">Upload New Image</label>
+                    <input name="listing[image][url]"  type="file" class="form-control edit-custom-input" >
+                </div>
+
+                <div class="row g-2">
+                    <div class="mb-2.5 col-md-3">
+                        <label for="price" class="form-label edit-custom-label mb-1">Price</label>
+                        <input name="listing[price]" value="<%= listing.price%>" type="number" class="form-control edit-custom-input" required>
+                        <div class="invalid-feedback"> price should be valid!</div>
+                    </div>
+
+                    <div class="mb-2.5 col-md-5">
+                        <label for="location" class="form-label edit-custom-label mb-1">Location</label>
+                        <input name="listing[location]" value="<%= listing.location%>" type="text" class="form-control edit-custom-input" required>
+                        <div class="invalid-feedback"> Location should be valid!</div>
+                    </div>
+
+                    <div class="mb-2.5 col-md-4">
+                        <label for="country" class="form-label edit-custom-label mb-1">Country</label>
+                        <input name="listing[country]" value="<%= listing.country%>" type="text" class="form-control edit-custom-input" required>
+                        <div class="invalid-feedback"> Country should be valid!</div>
+                    </div>
+                </div>
+                <button class="btn btn-airbnb-update w-100 py-2 mt-2 fw-semibold">
+                    <i class="fa-solid fa-pen-to-square me-2"></i>Update Details
+                </button>
+            </form>
+
+        </div>
+    </div>
+</div>
+

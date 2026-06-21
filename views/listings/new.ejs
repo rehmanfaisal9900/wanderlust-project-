@@ -1,0 +1,55 @@
+<% layout('/layouts/biolerplate') %>
+<div class="row mt-4 justify-content-center">
+    <div class="col-12 col-md-10 col-lg-7">
+        
+        <div class="card form-card border-0 p-4 shadow-sm rounded-4">
+            
+            <h3 class="form-heading mb-3 text-center">Create a New Listing</h3>
+            
+            <form action="/listings" method="post" class="custom-form needs-validation" novalidate enctype="multipart/form-data">
+                
+                <div class="mb-2.5">
+                    <label for="title" class="form-label custom-label mb-1">Title</label>
+                    <input type="text" name="listing[title]" placeholder="Give your place a catchy title" class="form-control custom-input" required>
+                    <div class="valid-feedback"> Title Looks good!</div>
+                </div>
+
+                <div class="mb-2.5">
+                    <label for="description" class="form-label custom-label mb-1">Description</label>
+                    <textarea name="listing[description]" placeholder="Describe the beauty and vibes of your place..." rows="2" class="form-control custom-input" required></textarea> 
+                    <div class="invalid-feedback"> Please enter shorter description!</div>
+                </div>
+                
+                <div class="mb-2.5">
+                    <label for="image" class="form-label custom-label mb-1">Upload Listing Image</label>
+                    <input name="listing[image]" type="file" class="form-control custom-input" required>
+                </div>
+                
+                <div class="row g-2">
+                    <div class="mb-2.5 col-md-3">
+                        <label for="price" class="form-label custom-label mb-1">Price</label>
+                        <input name="listing[price]" placeholder="1200" class="form-control custom-input" required>
+                        <div class="invalid-feedback"> Price should be valid!</div>
+                    </div>
+
+                    <div class="mb-2.5 col-md-5">
+                        <label for="location" class="form-label custom-label mb-1">Location</label>
+                        <input name="listing[location]" placeholder="e.g., Islamabad, KP" type="text" class="form-control custom-input" required>
+                        <div class="invalid-feedback"> Location should be valid!</div>
+                    </div>
+
+                    <div class="mb-2.5 col-md-4">
+                        <label for="country" class="form-label custom-label mb-1">Country</label>
+                        <input name="listing[country]" placeholder="Pakistan" type="text" class="form-control custom-input" required>
+                        <div class="invalid-feedback"> Country should be valid!</div>
+                    </div>
+                </div>
+        
+                <button class="btn btn-airbnb-form w-100 py-2 mt-2 fw-semibold">
+                    <i class="fa-solid fa-circle-plus me-2"></i>Create Listing
+                </button>
+                
+            </form>
+        </div>
+        </div>
+</div>
