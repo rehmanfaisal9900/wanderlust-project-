@@ -1,7 +1,4 @@
-{  
- "engines": {
-     "node": " v24.15.0."
-  },
+{
   "name": "majorproject",
   "version": "1.0.0",
   "description": "",
